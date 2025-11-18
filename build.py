@@ -33,8 +33,8 @@ def build(nmajor, nminor, npatch):
         f.write(index)
 
     nzp.package()
-    sandboxels.package()
-    adarkroom.package()
+    #sandboxels.package()
+    #adarkroom.package()
 
 
 build(False, False, False) 

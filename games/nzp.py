@@ -43,17 +43,17 @@ def indexPatcher():
     filesStart = index.find('files:') + 9
     filesEnd = filesStart + 108
     index = index[:filesStart] + makeIndexPatch2() + index[filesEnd:]
-    index = index.replace("Please allow/unblock our javascript to play.", "Please wait, this may take a while to load. Do not switch tabs.")
+    with open('./games/temp/ftewebgl_patched.js', 'r', encoding='utf-8', errors='ignore') as f:
+        js = f.read()
+    js = js.replace('\\', '\\\\').replace('`', '\\`')
+    index = index.replace('s.setAttribute(\'src\',"ftewebgl.js");', f's.textContent=`\n{js}\n`')
+    index = index.replace('Please allow/unblock our javascript to play.', 'Please wait, this may take a while to load. Do not switch tabs.')
     with open('./games/temp/index_patched.html', 'w') as f:
         f.write(index)
 
 def package():
-    Repo.clone_from('https://github.com/nzp-team/nzp-team.github.io', './games/temp')
+    #Repo.clone_from('https://github.com/nzp-team/nzp-team.github.io', './games/temp')
     ftewbglPatcher()
     indexPatcher()
-    os.makedirs('./temp/games/nzp')
-    shutil.copyfile('./games/temp/index_patched.html', './temp/games/nzp/index.html')
-    shutil.copyfile('./games/temp/ftewebgl_patched.js', './temp/games/nzp/ftewebgl.js')
-    shutil.copyfile('./games/temp/nzportable.ico', './temp/games/nzp/nzportable.ico')
+    register_game.register_game("./games/temp/nzportable.ico", './games/temp/index_patched.html', 'nzp')
     shutil.rmtree('./games/temp')
-    register_game.register_game("nzportable.ico", "nzp")

@@ -1,8 +1,19 @@
-def register_game(icon, name):
+import base64
+
+def register_game(icon, gameIndex, name):
     with open('./temp/index.html', 'r', encoding='utf-8', errors='ignore') as f:
         index = f.read()
+    with open('./patch.html', 'r', encoding='utf-8', errors='ignore') as f:
+        patch = f.read()
+    with open(icon, 'rb') as f:
+        icoData = base64.b64encode(f.read()).decode('utf-8')
+    icoUrl = f"data:image/x-icon;base64,{icoData}"
+    with open(gameIndex, 'rb') as f:
+        gameBase64 = base64.b64encode(f.read()).decode('utf-8')
     gamesEnd = index.find('<!--END GAMES-->') - 1
-    gameLink = f'<a href="games/{name}/index.html"><img class="game-icon" src="games/{name}/{icon}"></a>'
-    index = index[:gamesEnd] + gameLink + "\n" + index[gamesEnd:]
+    patch = patch.replace("{name}", name)
+    patch = patch.replace("{icoUrl}", icoUrl)
+    patch = patch.replace("{gameBase64}", gameBase64)
+    index = index[:gamesEnd] + patch + "\n" + index[gamesEnd:]
     with open('./temp/index.html', 'w', encoding='utf-8', errors='ignore') as f:
         f.write(index)

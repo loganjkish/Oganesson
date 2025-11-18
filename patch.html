@@ -1,0 +1,11 @@
+<a id="{name}"><img class="game-icon" src="{icoUrl}"></a>
+<script>
+    const {name} = `{gameBase64}`;
+
+        document.getElementById("{name}").addEventListener("click", () => {
+            const html = atob({name});
+            document.open();
+            document.write(html);
+            document.close();
+        });
+</script>
