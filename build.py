@@ -2,6 +2,7 @@ import shutil
 
 from games import nzp
 from games import sandboxels
+from games import adarkroom
 
 def version(nmajor, nminor, npatch):
     with open("./version", "r") as f:
@@ -31,8 +32,9 @@ def build(nmajor, nminor, npatch):
     with open("./temp/index.html", "w") as f:
         f.write(index)
 
-    #nzp.package()
-    #sandboxels.package()
+    nzp.package()
+    sandboxels.package()
+    adarkroom.package()
 
 
 build(False, False, False) 

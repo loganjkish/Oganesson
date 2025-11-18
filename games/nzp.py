@@ -43,7 +43,7 @@ def indexPatcher():
     filesStart = index.find('files:') + 9
     filesEnd = filesStart + 108
     index = index[:filesStart] + makeIndexPatch2() + index[filesEnd:]
-    index.replace("Please allow/unblock our javascript to play.", "Please wait, this may take a while to load. Do not switch tabs.")
+    index = index.replace("Please allow/unblock our javascript to play.", "Please wait, this may take a while to load. Do not switch tabs.")
     with open('./games/temp/index_patched.html', 'w') as f:
         f.write(index)
 
