@@ -11,11 +11,10 @@ def register_game(icon, gameIndex, name):
     icoUrl = f"data:image/x-icon;base64,{icoData}"
     with open(gameIndex, 'r') as f:
         gameHtml = minify(f.read(), minify_css=True, minify_js=True)
-        gameBase64 = base64.b64encode(gameHtml.encode('utf-8')).decode('utf-8')
     gamesEnd = index.find('<!--END GAMES-->') - 1
     patch = patch.replace("{name}", name)
     patch = patch.replace("{icoUrl}", icoUrl)
-    patch = patch.replace("{gameBase64}", gameBase64)
+    patch = patch.replace("{gameHtml}", gameHtml)
     index = index[:gamesEnd] + patch + "\n" + index[gamesEnd:]
     with open('./temp/index.html', 'w', encoding='utf-8', errors='ignore') as f:
         f.write(index)

@@ -1,11 +1,14 @@
 <a id="{name}"><img class="game-icon" src="{icoUrl}"></a>
+<template id="{name}-template">
+    {gameHtml}
+</template>
 <script>
-    const {name} = `{gameBase64}`;
-
-        document.getElementById("{name}").addEventListener("click", () => {
-            const html = atob({name});
-            document.open();
-            document.write(html);
-            document.close();
-        });
+    document.getElementById("{name}").addEventListener("click", () => {
+        const template = document.getElementById('{name}-template');
+        const html = template.innerHTML;
+        const encoded = encodeURIComponent(html).replace(/'/g, "%27").replace(/"/g, "%22");
+        const blob = new Blob([html], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        location.href = url;
+    });
 </script>
