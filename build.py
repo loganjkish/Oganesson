@@ -1,8 +1,7 @@
 import shutil
+from minify_html import minify
 
 from games import nzp
-from games import sandboxels
-from games import adarkroom
 
 def version(nmajor, nminor, npatch):
     with open("./version", "r") as f:
@@ -26,15 +25,12 @@ def version(nmajor, nminor, npatch):
 def build(nmajor, nminor, npatch):
     shutil.copytree("./static", "./temp", dirs_exist_ok=True)
     new_version = version(nmajor, nminor, npatch)
+    nzp.package()
     with open("./temp/index.html", "r") as f:
         index = f.read()
     index = index.replace("{version}", new_version)
+    index = minify(index, minify_css=True, minify_js=True)
     with open("./temp/index.html", "w") as f:
         f.write(index)
-
-    nzp.package()
-    #sandboxels.package()
-    #adarkroom.package()
-
 
 build(False, False, False) 
