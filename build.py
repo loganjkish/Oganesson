@@ -2,6 +2,7 @@ import shutil, os
 from minify_html import minify
 
 from games import nzp
+from games import webXash
 
 def version(nmajor, nminor, npatch):
     with open('./version', 'r') as f:
@@ -27,6 +28,7 @@ def build(nmajor, nminor, npatch):
     os.remove('./temp/particles.min.js')
     new_version = version(nmajor, nminor, npatch)
     nzp.package()
+    webXash.package()
     with open('./temp/index.html', 'r') as f:
         index = f.read()
     index = index.replace("{version}", new_version)

@@ -1,0 +1,12 @@
+<a id="{name}"><img class="game-icon" src="{icoUrl}"></a>
+<template id="{name}-template">
+    {gameHtml}
+</template>
+<script>
+document.getElementById("{name}").addEventListener("click", () => {
+    const template = document.getElementById('{name}-template');
+    const html = template.innerHTML;
+    const frame = document.getElementById("game-frame");
+    frame.srcdoc = html;
+});
+</script>

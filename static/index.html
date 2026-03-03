@@ -21,6 +21,14 @@
                 z-index: 1;
                 text-align: center;
             }
+
+            #game-frame {
+                z-index: 9999;
+                width:100%;
+                height:100%;
+                border:none;
+                position: relative;
+            }
         </style>
     </head>
     <body>
@@ -33,8 +41,23 @@
                 <!--END GAMES-->
             </div>
         </div>
+        <iframe id="game-frame" allowfullscreen></iframe>
     </body>
     <script src="./particles.min.js"></script>
+    <script>
+        const btn = document.getElementById("games");
+        const iframe = document.getElementById("game-frame");
+
+        btn.addEventListener("click", () => {
+        if (!document.fullscreenElement) {
+            iframe.requestFullscreen().catch(err => {
+            console.error("Error attempting fullscreen:", err);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+        });
+    </script>
     <script>
         particlesJS('particles-js', {
             "particles": {
